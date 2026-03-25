@@ -1,0 +1,121 @@
+.learn-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+.learn-empty {
+  text-align: center;
+  padding: 120px 24px;
+}
+
+.learn-empty h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.learn-empty p {
+  color: #9ca3af;
+  font-size: 1rem;
+  margin-bottom: 24px;
+}
+
+.learn-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 10px;
+  background: #f97316;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.learn-cta-btn:hover {
+  background: #ea580c;
+}
+
+.learn-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+/* Track progress section inside card */
+.track-progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.track-progress-bar-bg {
+  width: 100%;
+  height: 6px;
+  border-radius: 6px;
+  background: #1a1a1a;
+  overflow: hidden;
+}
+
+.track-progress-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.3s;
+}
+
+.track-progress-label {
+  font-size: 0.78rem;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.track-lessons-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.lesson-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid #3a3a3a;
+  background: #1a1a1a;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.lesson-btn:hover:not(.done) {
+  border-color: #f97316;
+  background: rgba(249, 115, 22, 0.1);
+}
+
+.lesson-btn.done {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: #22c55e;
+  cursor: default;
+}
+
+.track-complete-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #22c55e;
+  font-weight: 600;
+  font-size: 0.85rem;
+}

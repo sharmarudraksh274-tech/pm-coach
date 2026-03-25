@@ -1,0 +1,190 @@
+.profile-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* Level card */
+.level-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 32px;
+  margin-bottom: 32px;
+}
+
+.level-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.level-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--orange), #fb923c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+  flex-shrink: 0;
+}
+
+.level-info h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.level-info p {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+}
+
+/* XP bar */
+.xp-bar-bg {
+  width: 100%;
+  height: 10px;
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.xp-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--orange), #fb923c);
+}
+
+/* Level stats */
+.level-stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.level-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ls-icon {
+  color: var(--orange);
+}
+
+.ls-value {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.ls-label {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+/* Profile grid */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.profile-section h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+/* Achievements */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.achievement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 8px;
+  border-radius: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.achievement.unlocked .achievement-icon {
+  color: var(--orange);
+}
+
+.achievement.locked {
+  opacity: 0.4;
+}
+
+.achievement.locked .achievement-icon {
+  color: var(--text-muted);
+}
+
+.achievement-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Activity */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  gap: 12px;
+}
+
+.activity-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.88rem;
+}
+
+.activity-xp {
+  color: var(--orange);
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.activity-time {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .achievements-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .level-stats {
+    gap: 16px;
+  }
+}

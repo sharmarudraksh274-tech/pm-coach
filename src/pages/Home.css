@@ -1,0 +1,303 @@
+.home-daily {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+}
+
+/* Section 1 — Greeting */
+.greeting-section {
+  padding: 40px 0 0;
+}
+
+.greeting-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.greeting-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.greeting-date {
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+.stat-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(249, 115, 22, 0.15);
+  color: #f97316;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* Section 2 — Level progress */
+.level-section {
+  padding: 24px 0 0;
+}
+
+.level-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.level-icon {
+  color: #f97316;
+}
+
+.level-target {
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+.level-bar-bg {
+  width: 100%;
+  height: 10px;
+  background: #333333;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.level-bar-fill {
+  height: 100%;
+  background: #f97316;
+  border-radius: 5px;
+}
+
+/* Section 3 — Coach Card */
+.coach-card {
+  margin-top: 28px;
+  background: #262626;
+  border-radius: 12px;
+  border-left: 4px solid #f97316;
+  padding: 24px;
+}
+
+.coach-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #1a1a1a;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.task-item:hover:not(.task-done) {
+  background: #2a2a2a;
+}
+
+.task-done {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.task-check {
+  flex-shrink: 0;
+  padding-top: 1px;
+}
+
+.task-icon-done {
+  color: #22c55e;
+}
+
+.task-icon-pending {
+  color: #9ca3af;
+}
+
+.task-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-label {
+  font-size: 0.92rem;
+  color: #ffffff;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.task-done .task-label {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+.task-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-type {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #f97316;
+  background: rgba(249, 115, 22, 0.12);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.task-xp {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+/* Section 4 — Progress summary */
+.progress-summary {
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 20px;
+  background: #262626;
+  border-radius: 12px;
+}
+
+.summary-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.summary-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.summary-label {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.summary-divider {
+  width: 1px;
+  height: 36px;
+  background: #404040;
+}
+
+/* Section 5 — Quick links */
+.quick-links {
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+}
+
+.quick-link-btn {
+  flex: 1;
+  justify-content: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 10px;
+  background: #f97316;
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.2s, transform 0.2s;
+  text-decoration: none;
+}
+
+.quick-link-btn:hover {
+  background: #ea580c;
+  transform: translateY(-1px);
+}
+
+/* Quiz banner (no role) */
+.quiz-banner {
+  text-align: center;
+  padding: 80px 24px;
+}
+
+.quiz-banner-icon {
+  color: #f97316;
+  margin-bottom: 20px;
+}
+
+.quiz-banner h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 24px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
+
+.quiz-banner .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 10px;
+  background: #f97316;
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.quiz-banner .btn-primary:hover {
+  background: #ea580c;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 600px) {
+  .greeting-top {
+    flex-direction: column;
+  }
+
+  .greeting-title {
+    font-size: 1.4rem;
+  }
+
+  .quick-links {
+    flex-direction: column;
+  }
+
+  .progress-summary {
+    gap: 16px;
+    padding: 16px;
+  }
+}
