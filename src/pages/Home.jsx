@@ -167,18 +167,21 @@ export default function Home() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1, duration: 0.5 }}
       >
-        <p className="level-label">
-          <Zap size={16} className="level-icon" />
-          {levelDetails.level}
-          {levelDetails.nextLevel && (
-            <span className="level-target">
-              {" "}— {xp.toLocaleString()} / {levelDetails.tierMax !== null ? levelDetails.tierMax.toLocaleString() : ""} XP to {levelDetails.nextLevel}
-            </span>
-          )}
-          {!levelDetails.nextLevel && (
-            <span className="level-target"> — Max level reached!</span>
-          )}
-        </p>
+        <div className="level-label-row">
+          <p className="level-label">
+            <Zap size={16} className="level-icon" />
+            {levelDetails.level}
+            {levelDetails.nextLevel && (
+              <span className="level-target">
+                {" "}— {xp.toLocaleString()} / {levelDetails.tierMax !== null ? levelDetails.tierMax.toLocaleString() : ""} XP to {levelDetails.nextLevel}
+              </span>
+            )}
+            {!levelDetails.nextLevel && (
+              <span className="level-target"> — Max level reached!</span>
+            )}
+          </p>
+          <span className="role-badge">{role}</span>
+        </div>
         <div className="level-bar-bg">
           <motion.div
             className="level-bar-fill"
