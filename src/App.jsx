@@ -7,6 +7,7 @@ import Practice from "./pages/Practice";
 import Profile from "./pages/Profile";
 import RoleQuiz from "./pages/RoleQuiz";
 import Onboarding from "./pages/Onboarding";
+import LessonDetail from "./pages/LessonDetail";
 import { updateStreak, recalculateReadinessScore } from "./utils/gameState";
 
 function OnboardingGuard({ children }) {
@@ -37,6 +38,7 @@ function AppLayout() {
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/" element={<Home />} />
           <Route path="/learn" element={<Learn />} />
+          <Route path="/learn/:trackId/:lessonIndex" element={<LessonDetail />} />
           <Route path="/practice" element={<Practice />} />
           <Route path="/interview" element={<div style={{ maxWidth: 600, margin: "0 auto", padding: "120px 24px", textAlign: "center" }}><h2 style={{ marginBottom: 8 }}>Interview Prep</h2><p style={{ color: "#9ca3af" }}>This page unlocks when your readiness score reaches 60.</p></div>} />
           <Route path="/profile" element={<Profile />} />

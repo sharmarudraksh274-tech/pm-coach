@@ -7,7 +7,10 @@
       "Bash(curl -s https://generativelanguage.googleapis.com/v1beta/models?key=$VITE_GEMINI_API_KEY)",
       "Bash(python -c \"import sys,json; data=json.load\\(sys.stdin\\); [print\\(m[''''name'''']\\) for m in data.get\\(''''models'''',[]\\)]\")",
       "Bash(npx vite:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(git commit:*)",
+      "Bash(git remote:*)",
+      "Bash(git push:*)"
     ]
   }
 }

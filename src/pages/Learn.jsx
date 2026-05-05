@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   BookOpen,
@@ -27,13 +27,12 @@ import {
   getCompletedTracks,
   getTrackProgress,
   startTrack,
-  completeLessonInTrack,
 } from "../utils/gameState";
 import "../components/TrackCard.css";
 import "./Learn.css";
 
 const roleTrackMap = {
-  AIPM: [
+  "AI/Data PM": [
     {
       id: "aipm-1",
       title: "AI Product Thinking",
@@ -104,6 +103,44 @@ const roleTrackMap = {
       title: "Go-To-Market Strategy",
       description: "Plan and execute product launches that reach the right users at the right time.",
       icon: Rocket,
+      color: "#22c55e",
+      lessons: 4,
+      xp: 200,
+    },
+  ],
+  "Technical PM": [
+    {
+      id: "tech-1",
+      title: "System Design Basics",
+      description: "Understand distributed systems, scalability, and infrastructure trade-offs a PM must know.",
+      icon: Compass,
+      color: "#f97316",
+      lessons: 8,
+      xp: 400,
+    },
+    {
+      id: "tech-2",
+      title: "Technical PRD Writing",
+      description: "Write PRDs that engineering teams can execute — architecture, specs, and timelines.",
+      icon: FileText,
+      color: "#8b5cf6",
+      lessons: 6,
+      xp: 300,
+    },
+    {
+      id: "tech-3",
+      title: "API Thinking",
+      description: "Design APIs that developers love — RESTful patterns, contracts, and versioning.",
+      icon: Plug,
+      color: "#06b6d4",
+      lessons: 5,
+      xp: 250,
+    },
+    {
+      id: "tech-4",
+      title: "Developer Experience",
+      description: "Build technical products with great DX — docs, SDKs, onboarding, and tooling.",
+      icon: Users,
       color: "#22c55e",
       lessons: 4,
       xp: 200,
@@ -189,6 +226,7 @@ const roleTrackMap = {
 
 export default function Learn() {
   const role = getRole();
+  const navigate = useNavigate();
   const [, setRefresh] = useState(0);
   const [expandedTracks, setExpandedTracks] = useState([]);
   const forceRefresh = () => setRefresh((n) => n + 1);
@@ -213,11 +251,6 @@ export default function Learn() {
   const handleStartTrack = (trackId, totalLessons) => {
     startTrack(trackId, totalLessons);
     setExpandedTracks((prev) => [...prev, trackId]);
-    forceRefresh();
-  };
-
-  const handleCompleteLesson = (trackId, lessonIndex) => {
-    completeLessonInTrack(trackId, lessonIndex);
     forceRefresh();
   };
 
@@ -293,8 +326,7 @@ export default function Learn() {
                           <button
                             key={li}
                             className={`lesson-btn ${done ? "done" : ""}`}
-                            onClick={() => !done && handleCompleteLesson(track.id, li)}
-                            disabled={done}
+                            onClick={() => navigate(`/learn/${track.id}/${li}`)}
                           >
                             {done ? (
                               <CheckCircle size={14} />

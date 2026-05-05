@@ -13,106 +13,12 @@ import {
 } from "lucide-react";
 import { getRole, addXP } from "../utils/gameState";
 import { evaluateAnswer } from "../utils/aiHelper";
+import { CHALLENGES } from "../data/challengeData";
 
 const DIFFICULTY_COLORS = {
   Beginner: "#22c55e",
   Intermediate: "#f97316",
   Advanced: "#ef4444",
-};
-
-const CHALLENGES = {
-  AIPM: [
-    {
-      id: "practice-aipm-1",
-      difficulty: "Beginner",
-      title: "Define the AI Feature",
-      xp: 150,
-      scenario: "Notion wants to add an AI writing assistant. Write a one-page PRD defining the problem, user, and core feature.",
-    },
-    {
-      id: "practice-aipm-2",
-      difficulty: "Intermediate",
-      title: "Prioritise the Roadmap",
-      xp: 200,
-      scenario: "You are PM for an AI email tool with 5 feature requests. Prioritise them using RICE scoring and justify your top pick.",
-    },
-    {
-      id: "practice-aipm-3",
-      difficulty: "Advanced",
-      title: "Handle the Failure",
-      xp: 300,
-      scenario: "Your AI feature launched last week. Engagement is 40% below target. Walk through how you diagnose the problem and what you do next.",
-    },
-  ],
-  "Growth PM": [
-    {
-      id: "practice-growth-1",
-      difficulty: "Beginner",
-      title: "Map the Funnel",
-      xp: 150,
-      scenario: "Pick any app you use daily. Draw the acquisition to retention funnel and identify the single biggest drop-off point.",
-    },
-    {
-      id: "practice-growth-2",
-      difficulty: "Intermediate",
-      title: "Design the Experiment",
-      xp: 200,
-      scenario: "Duolingo wants to improve D7 retention by 10%. Design an A/B test with hypothesis, variants, metric, and success criteria.",
-    },
-    {
-      id: "practice-growth-3",
-      difficulty: "Advanced",
-      title: "Fix the Metric",
-      xp: 300,
-      scenario: "Your activation rate dropped from 62% to 48% in two weeks. No product changes were made. Walk through how you investigate and respond.",
-    },
-  ],
-  "Platform PM": [
-    {
-      id: "practice-platform-1",
-      difficulty: "Beginner",
-      title: "Design the API",
-      xp: 150,
-      scenario: "Stripe wants to add a webhook for failed payments. Define the API contract — endpoint, payload, error states, and developer docs outline.",
-    },
-    {
-      id: "practice-platform-2",
-      difficulty: "Intermediate",
-      title: "Write the Technical PRD",
-      xp: 200,
-      scenario: "Your team needs to build a rate-limiting system for your public API. Write a technical PRD covering problem, requirements, and edge cases.",
-    },
-    {
-      id: "practice-platform-3",
-      difficulty: "Advanced",
-      title: "Handle the Incident",
-      xp: 300,
-      scenario: "Your platform API is returning 500 errors for 15% of requests. Walk through your incident response process step by step.",
-    },
-  ],
-  "Consumer PM": [
-    {
-      id: "practice-consumer-1",
-      difficulty: "Beginner",
-      title: "Teardown the App",
-      xp: 150,
-      scenario: "Pick any consumer app. Do a 10-minute teardown — identify the core user, their JTBD, and 3 UX improvements.",
-    },
-    {
-      id: "practice-consumer-2",
-      difficulty: "Intermediate",
-      title: "Redesign the Flow",
-      xp: 200,
-      scenario: "Swiggy's checkout has 35% drop-off. You have one sprint. What do you change and why?",
-    },
-    {
-      id: "practice-consumer-3",
-      difficulty: "Advanced",
-      title: "Launch the Feature",
-      xp: 300,
-      scenario: "You are launching a social sharing feature for a fitness app. Define your GTM plan, success metrics, and what you watch in the first 48 hours.",
-    },
-  ],
 };
 
 function getCompletedChallenges() {
@@ -432,7 +338,7 @@ export default function Practice() {
     );
   }
 
-  const challenges = CHALLENGES[role] || CHALLENGES.AIPM;
+  const themeGroups = CHALLENGES[role] || CHALLENGES["AI/Data PM"];
 
   return (
     <div style={s.page}>
@@ -440,9 +346,18 @@ export default function Practice() {
         <h1 style={s.pageTitle}>Practice Challenges</h1>
         <p style={s.pageDesc}>Real-world scenarios for your {role} journey. Complete challenges to earn XP and build your portfolio.</p>
       </div>
-      <div style={s.grid}>
-        {challenges.map((c) => <ChallengeCard key={c.id} challenge={c} />)}
-      </div>
+      {themeGroups.map((group) => (
+        <div key={group.theme} style={s.themeSection}>
+          <div style={s.themeHeader}>
+            <span style={s.themeDot} />
+            <h2 style={s.themeTitle}>{group.theme}</h2>
+            <span style={s.themeCount}>{group.challenges.length} challenges</span>
+          </div>
+          <div style={s.grid}>
+            {group.challenges.map((c) => <ChallengeCard key={c.id} challenge={c} />)}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -452,7 +367,12 @@ const s = {
   header: { marginBottom: 32 },
   pageTitle: { fontSize: "1.8rem", fontWeight: 800, color: "#ffffff", marginBottom: 8 },
   pageDesc: { fontSize: "0.95rem", color: "#9ca3af", lineHeight: 1.5 },
-  grid: { display: "flex", flexDirection: "column", gap: 20 },
+  themeSection: { marginBottom: 40 },
+  themeHeader: { display: "flex", alignItems: "center", gap: 10, marginBottom: 16 },
+  themeDot: { width: 8, height: 8, borderRadius: "50%", background: "#f97316", flexShrink: 0 },
+  themeTitle: { fontSize: "1rem", fontWeight: 700, color: "#ffffff", margin: 0 },
+  themeCount: { fontSize: "0.75rem", color: "#9ca3af", fontWeight: 500 },
+  grid: { display: "flex", flexDirection: "column", gap: 16 },
   card: { background: "#262626", borderRadius: 12, padding: 24, border: "1px solid #333333" },
   cardHeader: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 },
   badge: { fontSize: "0.75rem", fontWeight: 700, padding: "4px 12px", borderRadius: 20, textTransform: "uppercase", letterSpacing: 0.5 },

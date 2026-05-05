@@ -17,7 +17,10 @@ app.post("/api/claude", async (req, res) => {
       return res.status(500).json({ error: "ANTHROPIC_API_KEY not configured" });
     }
 
-    const { model, max_tokens, system, messages } = req.body;
+    const { model, max_tokens, system, messages, temperature } = req.body;
+
+    const claudeBody = { model, max_tokens, system, messages };
+    if (temperature !== undefined) claudeBody.temperature = temperature;
 
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
@@ -26,7 +29,7 @@ app.post("/api/claude", async (req, res) => {
         "x-api-key": apiKey,
         "anthropic-version": "2023-06-01",
       },
-      body: JSON.stringify({ model, max_tokens, system, messages }),
+      body: JSON.stringify(claudeBody),
     });
 
     const data = await response.json();
