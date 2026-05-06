@@ -62,7 +62,6 @@ export default function LessonDetail() {
     }
 
     generateLesson(lessonTitle, role).then((raw) => {
-      console.log("[LessonDetail] raw received:", raw ? raw.substring(0, 120) : "EMPTY/NULL");
       if (!raw || raw.startsWith("Unable to evaluate")) {
         setError(true);
         setLoading(false);
