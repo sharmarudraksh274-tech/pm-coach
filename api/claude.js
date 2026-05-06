@@ -4,6 +4,7 @@ export default async function handler(req, res) {
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
+  console.log("[claude] key prefix:", apiKey ? apiKey.slice(0, 15) : "MISSING", "| length:", apiKey ? apiKey.length : 0);
   if (!apiKey || apiKey === "placeholder") {
     return res.status(500).json({ error: "ANTHROPIC_API_KEY not configured" });
   }
