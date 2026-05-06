@@ -9,6 +9,8 @@ Tech Stack
 •    Framer Motion (for animations)
 •    Lucide Icons (for icons)
 •    localStorage ONLY for all data persistence — no external database, no API calls
+•    Vercel for deployment (serverless function at api/claude.js proxies Anthropic API)
+•    Express server (server/index.js) for local development only — not used in production
 Design System — Never Change These
 •    Background: #1a1a1a
 •    Card background: #262626
@@ -41,7 +43,11 @@ Current File Structure
 •    src/utils/aiHelper.js (generateLesson, evaluateAnswer, generatePunchyLine, recommendRole)
 •    src/utils/gameState.js (all XP, streak, track, task, readiness logic)
 •    src/data/lessonData.js (TRACK_META and LESSON_TITLES for all 4 roles × 4 tracks)
+•    src/data/challengeData.js (20 challenges per role across 5 themes — 80 total)
 •    src/App.jsx (contains all routing)
+•    api/claude.js (Vercel serverless function — proxies all Claude API calls in production)
+•    server/index.js (Express server — local development only, not deployed)
+•    vercel.json (buildCommand, outputDirectory, rewrites for SPA routing)
 localStorage Key Map — Single Source of Truth
 Every piece of user data lives here. Never create new storage keys without updating this file.
 Key    Type    What It Stores
@@ -106,7 +112,9 @@ Technical PM tracks: System Design Basics, Technical PRDs, API Thinking, Develop
 Platform PM tracks: API Thinking, Developer Experience, System Design Basics, Technical PRDs
 Note: Consumer PM role removed. Consumer PM tracks are orphaned content — to be handled separately.
 AI Content Generation
-Anthropic Claude API confirmed working. Model: claude-haiku-4-5-20251001. API key stored in server/.env as ANTHROPIC_API_KEY, proxied through server/index.js.
+Anthropic Claude API confirmed working in production. Model: claude-haiku-4-5-20251001.
+•    Production: API key stored in Vercel Environment Variables as ANTHROPIC_API_KEY. Proxied through api/claude.js (Vercel serverless function). Uses relative URL /api/claude.
+•    Local dev: API key stored in server/.env as ANTHROPIC_API_KEY. Proxied through server/index.js (Express). Vite proxy in vite.config.js routes /api → localhost:3001.
 Four functions in src/utils/aiHelper.js:
 •    recommendRole(answers) — replaces static scoring. Sends all 6 quiz answers to Claude, returns { role, tagline, aiFluency }. tagline is 4–5 words reflecting the fit. Falls back to calculateRole() from quizScoring.js on API failure. Strips markdown fences before JSON.parse. Static fallback taglines per role always ensure the result screen is never blank.
 •    generateLesson(topic, pmRole) — generates lesson content in CONCEPT / REAL EXAMPLE / KEY TAKEAWAY format. Called by LessonDetail.jsx. Result cached in localStorage under lessonContent_${trackId}_${lessonIndex} — never called twice for the same lesson.
@@ -119,6 +127,14 @@ evaluateAnswer uses 4 universal criteria: Structure (logical sequence), Specific
 •    Intermediate: Structure 25, Specificity 25, PM Judgement 30, Metrics 20
 •    Advanced: Structure 15, Specificity 20, PM Judgement 35, Metrics 30
 Pass threshold per criteria is 60% of its weight. XP earned = Math.round((totalScore / 100) * challenge.xp). Claude returns structured JSON with per-criteria scores, pass/fail, feedback, weak area tags, recurring weak area detection, and an improvement tip. Results stored in challengeResults as JSON objects (not PASS/FAIL text). weakAreas localStorage key accumulates skill-gap tags across submissions for recurring weakness tracking.
+Practice Tab — Challenge Data
+20 challenges per role across 5 themes (80 total) in src/data/challengeData.js. Mixed difficulty (Beginner/Intermediate/Advanced) per theme. Roles covered: AI/Data PM, Growth PM, Technical PM, Platform PM.
+Deployment
+•    Platform: Vercel (free tier)
+•    Repo: GitHub (auto-deploys on push to main)
+•    vercel.json: buildCommand "vite build", outputDirectory "dist", rewrite /(.*) → /index.html for SPA routing. Vercel routes api/ functions before applying rewrites.
+•    ANTHROPIC_API_KEY must be set in Vercel → Settings → Environment Variables (Production + Preview). After updating the key, always trigger a redeploy.
+•    api/claude.js forwards error status codes from Anthropic — if the key is wrong, the browser receives a non-200 status and the lesson shows an error. Check Vercel Logs tab to diagnose API issues.
 Rules Claude Must Always Follow
 1.    Never change existing pages unless explicitly told to
 2.    Never change colours, fonts, or navigation design
@@ -144,9 +160,10 @@ Completed:
 ✅ Fix Learn page — corrected AIPM → "AI/Data PM" key mismatch, added missing Technical PM tracks
 ✅ Lesson detail screen — /learn/:trackId/:lessonIndex route, LessonDetail.jsx, AI-generated content with localStorage cache, Mark as Complete awards XP
 ✅ Per-lesson notes — collapsible notes panel on right side of lesson screen, auto-saves to localStorage, orange dot indicator when note exists
+✅ Expand Practice tab — 20 challenges per role across 5 themes (80 total), grouped by theme, in src/data/challengeData.js
+✅ PM role badge on Home — displayed top right of progress bar, white text, no background
+✅ Deploy to Vercel — vercel.json SPA routing, api/claude.js serverless function, ANTHROPIC_API_KEY in Vercel env vars
 
 Remaining:
 1.    Onboarding page — collect userName, save to localStorage, redirect to /quiz
 2.    Fix greeting to use userName from localStorage
-3.    Practice page with role-specific case studies
-4.    Deploy to Vercel
