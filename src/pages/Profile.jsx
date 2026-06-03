@@ -8,6 +8,7 @@ import {
   TrendingUp,
   CheckCircle,
   Lock,
+  Info,
 } from "lucide-react";
 import {
   getXP,
@@ -152,6 +153,11 @@ export default function Profile() {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="data-notice">
+        <Info size={13} />
+        Your progress is saved in this browser only. Switching devices or clearing browser data will reset everything.
       </div>
     </div>
   );

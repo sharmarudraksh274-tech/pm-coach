@@ -42,6 +42,15 @@ export default function LessonDetail() {
   const [noteText, setNoteText] = useState("");
 
   useEffect(() => {
+    if (track) {
+      localStorage.setItem("lastVisitedLesson", JSON.stringify({
+        trackId,
+        lessonIndex: lessonIdx,
+        trackTitle: track.title,
+        lessonTitle,
+      }));
+    }
+
     const progress = getTrackProgress(trackId);
     if (progress?.lessonsCompleted.includes(lessonIdx)) {
       setIsComplete(true);

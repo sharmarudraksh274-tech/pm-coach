@@ -9,6 +9,7 @@ import {
   BookOpen,
   Target,
   ArrowRight,
+  X,
 } from "lucide-react";
 import {
   getXP,
@@ -18,14 +19,20 @@ import {
   getLevelDetails,
   getRole,
   getCompletedTasks,
+  checkStreakStatus,
 } from "../utils/gameState";
 import "./Home.css";
 
 const DAILY_TASKS = {
-  AIPM: [
+  "AI/Data PM": [
     { id: "learn", label: "Read: How GPT-4 handles product decisions at Notion", type: "Learn", xp: 50 },
     { id: "practice", label: "Write a 1-page PRD for an AI feature of your choice", type: "Practice", xp: 50 },
     { id: "reflect", label: "Reflect: What makes a good AI product vs a bad one?", type: "Reflect", xp: 25 },
+  ],
+  "Technical PM": [
+    { id: "learn", label: "Read: How Figma built real-time multiplayer with CRDTs", type: "Learn", xp: 50 },
+    { id: "practice", label: "Write a technical spec for a rate-limiting feature on a public API", type: "Practice", xp: 50 },
+    { id: "reflect", label: "Reflect: How would you explain a webhook to a non-technical stakeholder?", type: "Reflect", xp: 25 },
   ],
   "Growth PM": [
     { id: "learn", label: "Read: How Duolingo improved D7 retention by 20%", type: "Learn", xp: 50 },
@@ -72,6 +79,15 @@ export default function Home() {
   const [completedToday, setCompletedToday] = useState([]);
   const [xp, setXp] = useState(getXP());
   const [streak, setStreak] = useState(getStreak());
+  const [streakAlert, setStreakAlert] = useState(() => checkStreakStatus());
+  const [lastLesson] = useState(() => {
+    try {
+      const val = localStorage.getItem("lastVisitedLesson");
+      return val ? JSON.parse(val) : null;
+    } catch {
+      return null;
+    }
+  });
   const role = getRole();
 
   // Load today's completed tasks on mount
@@ -131,7 +147,7 @@ export default function Home() {
     );
   }
 
-  const tasks = DAILY_TASKS[role] || DAILY_TASKS.AIPM;
+  const tasks = DAILY_TASKS[role] || DAILY_TASKS["AI/Data PM"];
   const levelDetails = getLevelDetails();
   const tasksCompletedToday = completedToday.length;
 
@@ -159,6 +175,24 @@ export default function Home() {
           </div>
         </div>
       </motion.section>
+
+      {/* Streak-broken banner */}
+      {streakAlert.broken && (
+        <motion.div
+          className="streak-alert"
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <Flame size={18} className="streak-alert-icon" />
+          <p className="streak-alert-text">
+            Welcome back! Your {streakAlert.previousStreak}-day streak was reset — your XP and progress are safe.
+          </p>
+          <button className="streak-alert-close" onClick={() => setStreakAlert({ broken: false })}>
+            <X size={16} />
+          </button>
+        </motion.div>
+      )}
 
       {/* Section 2 — Level progress bar */}
       <motion.section
@@ -191,6 +225,27 @@ export default function Home() {
           />
         </div>
       </motion.section>
+
+      {/* Resume card */}
+      {lastLesson && (
+        <motion.div
+          className="resume-card"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.5 }}
+        >
+          <div className="resume-card-text">
+            <p className="resume-card-label">Continue where you left off</p>
+            <p className="resume-card-sub">{lastLesson.trackTitle} · {lastLesson.lessonTitle}</p>
+          </div>
+          <Link
+            to={`/learn/${lastLesson.trackId}/${lastLesson.lessonIndex}`}
+            className="resume-btn"
+          >
+            Resume →
+          </Link>
+        </motion.div>
+      )}
 
       {/* Section 3 — Today's Coach Card */}
       <motion.section

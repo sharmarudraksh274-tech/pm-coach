@@ -68,6 +68,8 @@ quizAnswers    object    Q1–Q6 answer arrays stored as JSON on quiz completion
 aiFluencyScore    number    Q5 AI fluency score (0–16), stored on quiz completion
 lessonContent_${trackId}_${lessonIndex}    string    Claude-generated lesson text, cached permanently after first load
 lessonNote_${trackId}_${lessonIndex}    string    User's freeform notes for a specific lesson, auto-saved on keystroke
+onboardingComplete    boolean    True once the onboarding name screen is submitted
+lastVisitedLesson    object (JSON)    trackId, lessonIndex, trackTitle, lessonTitle of the last lesson the user opened — written by LessonDetail on every load, read by Home to show the resume card
 XP System
 Actions and XP values:
 •    Complete Role Quiz: +100 XP
@@ -163,7 +165,9 @@ Completed:
 ✅ Expand Practice tab — 20 challenges per role across 5 themes (80 total), grouped by theme, in src/data/challengeData.js
 ✅ PM role badge on Home — displayed top right of progress bar, white text, no background
 ✅ Deploy to Vercel — vercel.json SPA routing, api/claude.js serverless function, ANTHROPIC_API_KEY in Vercel env vars
-
-Remaining:
-1.    Onboarding page — collect userName, save to localStorage, redirect to /quiz
-2.    Fix greeting to use userName from localStorage
+✅ Onboarding page — Onboarding.jsx collects userName, sets onboardingComplete flag, redirects to /quiz. OnboardingGuard in App.jsx blocks all routes until flag is set.
+✅ Fix greeting — Home reads userName from localStorage for personalised greeting
+✅ Fix Home DAILY_TASKS — renamed AIPM key to "AI/Data PM" to match stored role value; added Technical PM daily tasks; fixed fallback reference
+✅ Streak-break acknowledgement — dismissable banner on Home when user returns after 2+ days gap; shows previous streak count; checkStreakStatus() reads pre-update localStorage state (called in useState initializer before updateStreak effect fires)
+✅ "Continue where you left off" resume card — LessonDetail writes lastVisitedLesson to localStorage on every lesson open; Home reads it in useState initializer and shows a card with track name, lesson title, and a "Resume →" link; invisible to users who have not opened any lesson
+✅ Data fragility warning — small muted notice at bottom of Profile page informing users that progress is saved in this browser only

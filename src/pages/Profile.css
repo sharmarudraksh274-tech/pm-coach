@@ -175,6 +175,16 @@
   flex-shrink: 0;
 }
 
+.data-notice {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 28px;
+  font-size: 0.78rem;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
 @media (max-width: 768px) {
   .profile-grid {
     grid-template-columns: 1fr;

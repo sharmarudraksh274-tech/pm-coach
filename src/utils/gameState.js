@@ -218,6 +218,20 @@ export function recalculateReadinessScore() {
   return syncReadinessScore();
 }
 
+// Returns streak-broken info using pre-update localStorage state.
+// Must be called before updateStreak() runs (i.e. during render, not in an effect).
+export function checkStreakStatus() {
+  const today = getToday();
+  const yesterday = getYesterday();
+  const lastActive = localStorage.getItem("lastActiveDate");
+  const currentStreak = getStreak();
+
+  if (!lastActive || lastActive === today || lastActive === yesterday || currentStreak <= 1) {
+    return { broken: false };
+  }
+  return { broken: true, previousStreak: currentStreak };
+}
+
 // ---- Track Progress (lesson-level) ----
 // Stored as { trackId: { started: true, lessonsCompleted: [0,1,2], totalLessons: 8 } }
 function getTrackProgressMap() {
